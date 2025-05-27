@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Debugging Practice</title>
+<style>
+  #box {
+    width: 150px;
+    height: 150px;
+    background: coral;
+    margin: 20px auto;
+  }
+</style>
+</head>
+<body>
+
+<div id="box"></div>
+
+<script>
+  const box = document.getElementById('box');
+  let count = 0;
+
+  function changeColor() {
+    count++;
+    console.log('Change color called, count:', count);
+    if (count % 2 === 0) {
+      box.style.background = 'lightblue';
+    } else {
+      box.style.background = 'coral';
+    }
+  }
+
+  box.onclick = () => {
+    changeColor();
+  };
+
+  function causeError() {
+    console.log(undefinedVariable);
+  }
+
+  setTimeout(causeError, 3000);
+</script>
+
+</body>
+</html>

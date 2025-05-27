@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Video Invite</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: 30px auto; padding: 10px; }
+  #message { margin-top: 10px; font-weight: bold; color: green; }
+</style>
+</head>
+<body>
+
+<h2>Event Promo Video</h2>
+
+<video id="promoVideo" width="100%" controls>
+  <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm" />
+  Your browser does not support the video tag.
+</video>
+
+<div id="message"></div>
+
+<form id="rsvpForm">
+  <label>Name: <input type="text" required /></label><br/><br/>
+  <label>Email: <input type="email" required /></label><br/><br/>
+  <button type="submit">Submit RSVP</button>
+</form>
+
+<script>
+  const video = document.getElementById('promoVideo');
+  const message = document.getElementById('message');
+  const form = document.getElementById('rsvpForm');
+  let isFormDirty = false;
+
+  video.oncanplay = () => {
+    message.textContent = "Video ready to play";
+  };
+
+  form.addEventListener('input', () => {
+    isFormDirty = true;
+  });
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    isFormDirty = false;
+    alert("Thank you for your RSVP!");
+    form.reset();
+  });
+
+  window.onbeforeunload = e => {
+    if (isFormDirty) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Event Feedback</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 480px; margin: 20px auto; }
+  label, input, select, textarea, button { display: block; width: 100%; margin-top: 12px; box-sizing: border-box; }
+  #phoneError { color: red; font-size: 0.9em; }
+  #eventFee { margin-top: 8px; font-weight: bold; }
+  #confirmation { margin-top: 15px; font-weight: bold; }
+  #enlargeImg { margin-top: 20px; width: 200px; cursor: pointer; transition: transform 0.3s ease; }
+  #enlargeImg.enlarged { transform: scale(1.8); }
+  #charCount { font-size: 0.9em; text-align: right; color: #555; }
+</style>
+</head>
+<body>
+
+<h2>Event Feedback Form</h2>
+
+<form id="form" novalidate>
+  <label>Phone Number:
+    <input type="text" id="phone" placeholder="123-456-7890" required />
+  </label>
+  <div id="phoneError"></div>
+
+  <label>Select Event:
+    <select id="eventSelect" required>
+      <option value="" disabled selected>Select event</option>
+      <option value="50">Workshop - $50</option>
+      <option value="30">Seminar - $30</option>
+      <option value="0">Community Meetup - Free</option>
+    </select>
+  </label>
+  <div id="eventFee"></div>
+
+  <label>Feedback:
+    <textarea id="feedback" rows="5" placeholder="Write your feedback..."></textarea>
+  </label>
+  <div id="charCount">Characters: 0</div>
+
+  <button type="submit" id="submitBtn">Submit Feedback</button>
+</form>
+
+<img id="enlargeImg" src="https://via.placeholder.com/200" alt="Event" title="Double-click to enlarge" />
+
+<div id="confirmation"></div>
+
+<script>
+const phone = document.getElementById('phone'),
+      phoneError = document.getElementById('phoneError'),
+      eventSelect = document.getElementById('eventSelect'),
+      eventFee = document.getElementById('eventFee'),
+      feedback = document.getElementById('feedback'),
+      charCount = document.getElementById('charCount'),
+      submitBtn = document.getElementById('submitBtn'),
+      confirmation = document.getElementById('confirmation'),
+      enlargeImg = document.getElementById('enlargeImg'),
+      form = document.getElementById('form');
+
+phone.onblur = () => {
+  const pattern = /^\d{3}-\d{3}-\d{4}$/;
+  phoneError.textContent = phone.value && !pattern.test(phone.value) ? "Invalid format. Use xxx-xxx-xxxx." : "";
+};
+
+eventSelect.onchange = () => {
+  eventFee.textContent = eventSelect.value === "0" ? "This event is free!" : `Event fee: $${eventSelect.value}`;
+};
+
+submitBtn.onclick = e => {
+  e.preventDefault();
+  if (!phone.value || phoneError.textContent || !eventSelect.value) {
+    confirmation.style.color = "red";
+    confirmation.textContent = "Please fill form correctly.";
+    return;
+  }
+  confirmation.style.color = "green";
+  confirmation.textContent = "Thank you for your feedback!";
+  form.reset();
+  eventFee.textContent = "";
+  charCount.textContent = "Characters: 0";
+};
+
+enlargeImg.ondblclick = () => enlargeImg.classList.toggle('enlarged');
+
+feedback.onkeyup = () => charCount.textContent = `Characters: ${feedback.value.length}`;
+</script>
+
+</body>
+</html>

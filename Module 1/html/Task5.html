@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Event Registration</title>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 20px;
+  }
+  form {
+    max-width: 350px;
+  }
+  label, input, select, textarea, button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+  }
+  input, select, textarea {
+    padding: 6px;
+    box-sizing: border-box;
+  }
+  output {
+    margin-top: 15px;
+    color: green;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<form id="form">
+  <label>Name:
+    <input type="text" name="name" placeholder="Your full name" required autofocus />
+  </label>
+
+  <label>Email:
+    <input type="email" name="email" placeholder="example@mail.com" required />
+  </label>
+
+  <label>Date:
+    <input type="date" name="date" required />
+  </label>
+
+  <label>Event Type:
+    <select name="eventType" required>
+      <option value="" disabled selected>Select event type</option>
+      <option>Workshop</option>
+      <option>Seminar</option>
+      <option>Community Meetup</option>
+      <option>Other</option>
+    </select>
+  </label>
+
+  <label>Message:
+    <textarea name="message" placeholder="Additional info..."></textarea>
+  </label>
+
+  <button type="submit">Register</button>
+
+  <output id="confirmation"></output>
+</form>
+
+<script>
+  const form = document.getElementById('form');
+  const output = document.getElementById('confirmation');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const { name, email, date, eventType } = form.elements;
+    output.textContent = `Thanks, ${name.value}! You registered for the ${eventType.value} on ${date.value}. We'll email you at ${email.value}.`;
+
+    form.reset();
+    name.focus();
+  });
+</script>
+
+</body>
+</html>

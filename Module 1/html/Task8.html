@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>User Preferences</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 400px; margin: 40px auto; padding: 10px; }
+  select, button { width: 100%; padding: 8px; margin-top: 15px; box-sizing: border-box; }
+</style>
+</head>
+<body>
+
+<h2>Select Your Preferred Event</h2>
+
+<select id="eventSelect">
+  <option value="" disabled selected>Select event</option>
+  <option value="workshop">Workshop</option>
+  <option value="seminar">Seminar</option>
+  <option value="meetup">Community Meetup</option>
+  <option value="other">Other</option>
+</select>
+
+<button id="clearBtn">Clear Preferences</button>
+
+<script>
+  const select = document.getElementById('eventSelect');
+  const clearBtn = document.getElementById('clearBtn');
+
+  window.onload = () => {
+    const saved = localStorage.getItem('preferredEvent');
+    if (saved) select.value = saved;
+  };
+
+  select.onchange = () => {
+    localStorage.setItem('preferredEvent', select.value);
+    sessionStorage.setItem('sessionEvent', select.value);
+  };
+
+  clearBtn.onclick = () => {
+    localStorage.removeItem('preferredEvent');
+    sessionStorage.clear();
+    select.value = "";
+  };
+</script>
+
+</body>
+</html>
